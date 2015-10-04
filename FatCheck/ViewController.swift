@@ -104,6 +104,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         if let result = weights {
             // Get the first result
+            // Todo: Manage error where no results (Either never used, or no access given)
             if let item = result.first {
                 let sample = item as? HKQuantitySample
                 let kilograms = sample!.quantity.doubleValueForUnit(HKUnit.gramUnitWithMetricPrefix(.Kilo))
@@ -171,15 +172,18 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let weightQuantity = HKQuantity(unit: HKUnit.gramUnitWithMetricPrefix(.Kilo), doubleValue: newvalue)
         let object = HKQuantitySample(type: weightType!, quantity: weightQuantity, startDate: startDate, endDate: startDate)
         healthStore.saveObject(object, withCompletion: { (success, error) -> Void in
-            if error != nil {
-                print("Error reading weight from HealthKit Store: \(error!.localizedDescription)")
-                return
-            }
-            if success {
-                print("Data \(weightQuantity) saved to HK.")
-            } else {
-                print("Data not saved correctly.")
-            }
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if error != nil {
+                    print("Error reading weight from HealthKit Store: \(error!.localizedDescription)")
+                    // Todo: App crashes if no authorisation given
+                    return
+                }
+                if success {
+                    print("Data \(weightQuantity) saved to HK.")
+                } else {
+                    print("Data not saved correctly.")
+                }
+            })
         })
     }
 }

@@ -71,7 +71,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     // MARK: Actions
     @IBAction func saveWeight(sender: UIButton) {
         let newweight = pickerData[pickerView.selectedRowInComponent(0)]
-        setNewModel(newweight, timeSince: timeSince)
+        writeMostRecentSample(newweight)
+        readMostRecentSample(weightType!, completion: manageModelUpdate)
     }
 
     // MARK: Private functions
@@ -163,5 +164,22 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         healthStore.executeQuery(query)
     }
     
+    private func writeMostRecentSample(newweight: String) {
+        let startDate = NSDate()
+        let newvalue = Double(newweight)!
+        let weightQuantity = HKQuantity(unit: HKUnit.gramUnitWithMetricPrefix(.Kilo), doubleValue: newvalue)
+        let object = HKQuantitySample(type: weightType!, quantity: weightQuantity, startDate: startDate, endDate: startDate)
+        healthStore.saveObject(object, withCompletion: { (success, error) -> Void in
+            if error != nil {
+                print("Error reading weight from HealthKit Store: \(error!.localizedDescription)")
+                return
+            }
+            if success {
+                print("Data \(weightQuantity) saved to HK.")
+            } else {
+                print("Data not saved correctly.")
+            }
+        })
+    }
 }
 

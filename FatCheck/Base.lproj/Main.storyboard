@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FatCheck" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,59 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iRD-SV-dvb">
+                                <rect key="frame" x="40" y="10" width="520" height="580"/>
+                                <animations/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="EZH-D6-N87"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="yGs-xV-bMh"/>
+                                </connections>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCX-dq-SM5">
+                                <rect key="frame" x="206" y="487" width="189" height="73"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="189" id="Hnx-AH-Qk2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
+                                <state key="normal" title="Save Weight">
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveWeight:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RHS-bw-2f6"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jp7-a5-sgs">
+                                <rect key="frame" x="279" y="28" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="iRD-SV-dvb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="7tF-BW-gki"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="iCX-dq-SM5" secondAttribute="bottom" constant="40" id="GoW-u4-Wnh"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="iRD-SV-dvb" secondAttribute="bottom" constant="10" id="W5y-1s-B8p"/>
+                            <constraint firstItem="iRD-SV-dvb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="bll-Oh-3LG"/>
+                            <constraint firstItem="iCX-dq-SM5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="467" id="ckg-Sk-PNE"/>
+                            <constraint firstItem="iRD-SV-dvb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qT9-aW-vlP"/>
+                            <constraint firstItem="iCX-dq-SM5" firstAttribute="centerX" secondItem="iRD-SV-dvb" secondAttribute="centerX" id="s3j-gp-VKX"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pickerView" destination="iRD-SV-dvb" id="7Kp-EL-ExH"/>
+                        <outlet property="saveButton" destination="iCX-dq-SM5" id="HBX-7X-CkW"/>
+                        <outlet property="topLabel" destination="jp7-a5-sgs" id="U0g-W0-ezZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-31" y="191"/>
         </scene>
     </scenes>
 </document>

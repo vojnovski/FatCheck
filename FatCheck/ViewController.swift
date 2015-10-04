@@ -75,8 +75,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     // MARK: Private functions
-    // Todo: Lazy initialize healthStore depending on platform and check for presence
     private func doHealthKitManagement() {
+        
+        if !HKHealthStore.isHealthDataAvailable()
+        {
+            let error = NSError(domain: "mk.vv.FatCheck", code: 2, userInfo: [NSLocalizedDescriptionKey:"HealthKit is not available on this Device"])
+            print("\(error.localizedDescription)")
+            return;
+        }
+        
         if let weightType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass) {
             let setType = Set<HKSampleType>(arrayLiteral: weightType)
             healthStore.requestAuthorizationToShareTypes(setType, readTypes: setType, completion: { (success, error) -> Void in

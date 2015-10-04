@@ -12,6 +12,7 @@ import HealthKit
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     // MARK: Constants
+    let timeout: Double = 300
     let ctxtDown: Int = 20
     let ctxtUp: Int = 20
     let healthStore = HKHealthStore()
@@ -126,7 +127,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             }
             self.pickerView.reloadAllComponents()
             self.pickerView.selectRow(self.ctxtDown, inComponent: 0, animated: true)
-            if timeSince < 300 {
+            if timeSince < self.timeout {
                 self.saveButton.enabled = false
                 self.pickerView.userInteractionEnabled = false
                 // Add a label that explains this

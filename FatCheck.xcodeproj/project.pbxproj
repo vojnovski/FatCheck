@@ -13,6 +13,7 @@
 		6F5ABD171BC09D2700BE245F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F5ABD161BC09D2700BE245F /* Assets.xcassets */; };
 		6F5ABD1A1BC09D2700BE245F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F5ABD181BC09D2700BE245F /* LaunchScreen.storyboard */; };
 		6F5ABD251BC09D2700BE245F /* FatCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABD241BC09D2700BE245F /* FatCheckTests.swift */; };
+		6F5ABD331BC09F9300BE245F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5ABD321BC09F9300BE245F /* HealthKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,8 @@
 		6F5ABD201BC09D2700BE245F /* FatCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FatCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F5ABD241BC09D2700BE245F /* FatCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FatCheckTests.swift; sourceTree = "<group>"; };
 		6F5ABD261BC09D2700BE245F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6F5ABD311BC09F8500BE245F /* FatCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = FatCheck.entitlements; sourceTree = "<group>"; };
+		6F5ABD321BC09F9300BE245F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F5ABD331BC09F9300BE245F /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +63,7 @@
 		6F5ABD031BC09D2700BE245F = {
 			isa = PBXGroup;
 			children = (
+				6F5ABD321BC09F9300BE245F /* HealthKit.framework */,
 				6F5ABD0E1BC09D2700BE245F /* FatCheck */,
 				6F5ABD231BC09D2700BE245F /* FatCheckTests */,
 				6F5ABD0D1BC09D2700BE245F /* Products */,
@@ -77,6 +82,7 @@
 		6F5ABD0E1BC09D2700BE245F /* FatCheck */ = {
 			isa = PBXGroup;
 			children = (
+				6F5ABD311BC09F8500BE245F /* FatCheck.entitlements */,
 				6F5ABD0F1BC09D2700BE245F /* AppDelegate.swift */,
 				6F5ABD111BC09D2700BE245F /* ViewController.swift */,
 				6F5ABD131BC09D2700BE245F /* Main.storyboard */,
@@ -146,6 +152,11 @@
 					6F5ABD0B1BC09D2700BE245F = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = 32Q5M7YP7E;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					6F5ABD1F1BC09D2700BE245F = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -326,10 +337,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FatCheck/FatCheck.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FatCheck/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mk.vv.FatCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -337,10 +354,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FatCheck/FatCheck.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FatCheck/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mk.vv.FatCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

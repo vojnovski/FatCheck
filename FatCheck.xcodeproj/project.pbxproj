@@ -14,6 +14,7 @@
 		6F5ABD1A1BC09D2700BE245F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F5ABD181BC09D2700BE245F /* LaunchScreen.storyboard */; };
 		6F5ABD251BC09D2700BE245F /* FatCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5ABD241BC09D2700BE245F /* FatCheckTests.swift */; };
 		6F5ABD331BC09F9300BE245F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5ABD321BC09F9300BE245F /* HealthKit.framework */; };
+		6FE807FB1BC2A1720001748A /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE807FA1BC2A1720001748A /* BorderedView.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		6F5ABD261BC09D2700BE245F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F5ABD311BC09F8500BE245F /* FatCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = FatCheck.entitlements; sourceTree = "<group>"; };
 		6F5ABD321BC09F9300BE245F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		6FE807FA1BC2A1720001748A /* BorderedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				6F5ABD161BC09D2700BE245F /* Assets.xcassets */,
 				6F5ABD181BC09D2700BE245F /* LaunchScreen.storyboard */,
 				6F5ABD1B1BC09D2700BE245F /* Info.plist */,
+				6FE807FA1BC2A1720001748A /* BorderedView.swift */,
 			);
 			path = FatCheck;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F5ABD121BC09D2700BE245F /* ViewController.swift in Sources */,
+				6FE807FB1BC2A1720001748A /* BorderedView.swift in Sources */,
 				6F5ABD101BC09D2700BE245F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +414,7 @@
 				6F5ABD2B1BC09D2700BE245F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6F5ABD2C1BC09D2700BE245F /* Build configuration list for PBXNativeTarget "FatCheckTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +423,7 @@
 				6F5ABD2E1BC09D2700BE245F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

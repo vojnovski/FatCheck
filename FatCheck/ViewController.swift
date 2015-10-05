@@ -45,7 +45,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         // Initialize and ask for authorisation
         doHealthKitManagement()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appToForground" , name:UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appToForeground" , name:UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -55,12 +55,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         readMostRecentSample(weightType!, completion: manageModelUpdate)
     }
     
-    
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func appToForground() {
+    func appToForeground() {
         readMostRecentSample(weightType!, completion: manageModelUpdate)
     }
     
@@ -136,7 +135,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             self.weight = Double(weight)!
             self.timeSince = timeSince
             print(timeSince)
-            self.topLabel.text = weight
             // Stupid swift not recognizing map as it should
             self.pickerData.removeAll()
             for i in (-self.ctxtDown...self.ctxtUp) {

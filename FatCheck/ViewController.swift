@@ -24,16 +24,24 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var timeSince = 0.0
     
     // MARK: Properties
-    @IBOutlet weak var topLabel: UILabel!
+    @IBOutlet weak var topView: BorderedView!
+    @IBOutlet weak var dataView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var buttonView: BorderedView!
+
+    
+    @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
- 
+    
     // MARK: View Logic
     override func viewDidLoad() {
         super.viewDidLoad()
         
         pickerView.dataSource = self;
         pickerView.delegate = self;
+        
+        //Do borders and change button form to circle
+        doUIStuff()
         
         // Initialize and ask for authorisation
         doHealthKitManagement()
@@ -77,6 +85,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     // MARK: Private functions
+    private func doUIStuff() {
+        buttonView.borderWidth=CGFloat(1.0)
+        buttonView.borderDrawOptions = BorderedViewDrawOptions.DrawTop
+        topView.borderWidth=CGFloat(1.0)
+        topView.borderDrawOptions = BorderedViewDrawOptions.DrawBottom
+        saveButton.layer.cornerRadius = saveButton.frame.width/2.0
+    }
+    
     private func doHealthKitManagement() {
         
         if !HKHealthStore.isHealthDataAvailable()

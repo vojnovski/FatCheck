@@ -12,7 +12,7 @@ import HealthKit
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     // MARK: Constants
-    let timeout: Double = 300
+    let timeout: Int = 600
     let ctxtDown: Int = 20
     let ctxtUp: Int = 20
     let healthStore = HKHealthStore()
@@ -124,14 +124,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             if let item = result.first {
                 let sample = item as? HKQuantitySample
                 let kilograms = sample!.quantity.doubleValueForUnit(HKUnit.gramUnitWithMetricPrefix(.Kilo))
-                let timeSince = NSDate().timeIntervalSinceDate(sample!.startDate)
-                setNewModel("\(kilograms)", timeSince: timeSince)
+                setNewModel("\(kilograms)", sampleStartDate: sample!.startDate)
             }
         }
     }
     
     // Updates datamodel (self.weight) and propagates changes to the picker View
-    private func setNewModel(weight: String, timeSince: Double) {
+    private func setNewModel(weight: String, sampleStartDate: NSDate) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.weight = Double(weight)!
             self.timeSince = timeSince
@@ -143,13 +142,46 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             }
             self.pickerView.reloadAllComponents()
             self.pickerView.selectRow(self.ctxtDown, inComponent: 0, animated: true)
-            if timeSince < self.timeout {
-                self.saveButton.enabled = false
-                self.pickerView.userInteractionEnabled = false
-                // Add a label that explains this
-                // Start a counter that re-enables everything after a while
+            let timeSince = NSDate().timeIntervalSinceDate(sampleStartDate)
+            let calendar = NSCalendar.currentCalendar()
+            let later: NSDate = calendar.dateByAddingUnit(
+                .Second,
+                value: self.timeout,
+                toDate: sampleStartDate,
+                options: NSCalendarOptions(rawValue: 0))!
+            let hour = calendar.component(.Hour, fromDate: later)
+            let min = calendar.component(.Minute, fromDate: later)
+            let sec = calendar.component(.Second, fromDate: later)
+            if timeSince < Double(self.timeout) {
+                self.disableEntry(hour, min: min, sec: sec)
+                NSTimer.scheduledTimerWithTimeInterval(
+                    later.timeIntervalSinceDate(NSDate()),
+                    target: self,
+                    selector: Selector("enableEntry"),
+                    userInfo: nil, repeats: false)
+            } else {
+                self.enableEntry()
             }
         });
+    }
+    
+    private func disableEntry(string: String) {
+        self.saveButton.enabled = false
+        self.pickerView.userInteractionEnabled = false
+        self.warningLabel.text = string
+    }
+    private func disableEntry(hour: Int, min: Int, sec: Int) {
+        self.saveButton.enabled = false
+        self.pickerView.userInteractionEnabled = false
+        self.warningLabel.text = "Weight well set. Locked until \(hour)h\(min)m\(sec)s!"
+    }
+    
+    // Objc in order to be passed as selector to a timer (Swift is weird)
+    @objc private func enableEntry() {
+        self.saveButton.enabled = true
+        self.pickerView.userInteractionEnabled = true
+        self.warningLabel.text = ""
+        
     }
 
     // MARK: HealthKit Helpers

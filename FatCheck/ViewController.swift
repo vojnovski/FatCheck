@@ -98,14 +98,19 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         if !HKHealthStore.isHealthDataAvailable()
         {
             let error = NSError(domain: "mk.vv.FatCheck", code: 2, userInfo: [NSLocalizedDescriptionKey:"HealthKit is not available on this Device"])
+            self.saveButton.enabled = false
+            self.pickerView.userInteractionEnabled = false
+            warningLabel.text = "HealthKit is not available on this Device"
             print("\(error.localizedDescription)")
-            return;
         }
         
         if let weightType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass) {
             let setType = Set<HKSampleType>(arrayLiteral: weightType)
             healthStore.requestAuthorizationToShareTypes(setType, readTypes: setType, completion: { (success, error) -> Void in
-                // Todo: Exit app on error
+                if error != nil {
+                    self.disableEntry("Authorise HealthKit please!")
+                }
+
             })
         }
     }
@@ -115,12 +120,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         if( error != nil )
         {
             print("Error reading weight from HealthKit Store: \(error.localizedDescription)")
-            return;
+            self.disableEntry("Error reading weight from HealthKit Store")
+            
         }
         
         if let result = weights {
             // Get the first result
-            // Todo: Manage error where no results (Either never used, or no access given)
+            if (result.count == 0) {
+                self.disableEntry("Error reading weight from HealthKit Store")
+            }
             if let item = result.first {
                 let sample = item as? HKQuantitySample
                 let kilograms = sample!.quantity.doubleValueForUnit(HKUnit.gramUnitWithMetricPrefix(.Kilo))
@@ -201,7 +209,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: 30, sortDescriptors: [sortDescriptor]) { (query, tmpResult, error) -> Void in
             
             if error != nil {
-                return
+                self.disableEntry("Authorise app or add at least one weight from HealthKit!")
             }
             
             if completion != nil {
@@ -221,17 +229,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         healthStore.saveObject(object, withCompletion: { (success, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if error != nil {
-                    print("Error reading weight from HealthKit Store: \(error!.localizedDescription)")
-                    // Todo: App crashes if no authorisation given
+                    self.disableEntry("Error writing to HealthKit. Did you authorise it?")
                     return
                 }
                 if success {
                     print("Data \(weightQuantity) saved to HK.")
                 } else {
-                    print("Data not saved correctly.")
+                    self.disableEntry("Error writing to HealthKit. Did you authorise it?")
                 }
             })
         })
     }
+
 }
 

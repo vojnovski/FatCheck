@@ -20,8 +20,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     // MARK: Data
     var pickerData: [String] = [String]()
-    var weight = 100.0
-    var timeSince = 0.0
     var oldrow: Int = 20
     var red = [CGFloat]()
     var green = [CGFloat]()
@@ -31,7 +29,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var dataView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var buttonView: BorderedView!
-
     
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
@@ -175,9 +172,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     // Updates datamodel (self.weight) and propagates changes to the picker View
     private func setNewModel(weight: String, sampleStartDate: NSDate) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.weight = Double(weight)!
-            self.timeSince = timeSince
-            print(timeSince)
             // Stupid swift not recognizing map as it should
             self.pickerData.removeAll()
             for i in (-self.ctxtDown...self.ctxtUp) {
@@ -228,7 +222,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     // MARK: HealthKit Helpers
-    // Todo: Put this in a Factory class?
     private func readMostRecentSample(sampleType:HKSampleType, completion: (([HKSample]!, NSError!) -> Void)!) {
         // startDate and endDate are NSDate objects
         let startDate = NSDate.distantPast()

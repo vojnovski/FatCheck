@@ -32,6 +32,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var warningLabel: UILabel!
     
     // MARK: View Logic
     override func viewDidLoad() {

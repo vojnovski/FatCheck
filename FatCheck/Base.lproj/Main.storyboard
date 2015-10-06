@@ -76,10 +76,20 @@
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="yGs-xV-bMh"/>
                                         </connections>
                                     </pickerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WS1-eQ-hIC" userLabel="Warning Label">
+                                        <rect key="frame" x="0.0" y="20" width="600" height="20.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="WS1-eQ-hIC" secondAttribute="trailing" id="3ci-gf-D3Y"/>
+                                    <constraint firstItem="WS1-eQ-hIC" firstAttribute="leading" secondItem="che-BO-M0E" secondAttribute="leading" id="4sA-Cl-goe"/>
+                                    <constraint firstItem="WS1-eQ-hIC" firstAttribute="top" secondItem="che-BO-M0E" secondAttribute="top" constant="20" id="Uw7-Hr-G9o"/>
                                     <constraint firstItem="iRD-SV-dvb" firstAttribute="centerX" secondItem="che-BO-M0E" secondAttribute="centerX" id="uSo-fv-agB"/>
                                     <constraint firstItem="iRD-SV-dvb" firstAttribute="centerY" secondItem="che-BO-M0E" secondAttribute="centerY" id="zT0-8w-NPW"/>
                                 </constraints>
@@ -107,6 +117,7 @@
                         <outlet property="saveButton" destination="iCX-dq-SM5" id="HBX-7X-CkW"/>
                         <outlet property="topLabel" destination="jp7-a5-sgs" id="U0g-W0-ezZ"/>
                         <outlet property="topView" destination="7bZ-co-wCD" id="Ocv-Zy-Bv2"/>
+                        <outlet property="warningLabel" destination="WS1-eQ-hIC" id="el1-Uf-Ual"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

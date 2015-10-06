@@ -22,6 +22,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var pickerData: [String] = [String]()
     var weight = 100.0
     var timeSince = 0.0
+    var oldrow: Int = 20
+    var red = [CGFloat]()
+    var green = [CGFloat]()
     
     // MARK: Properties
     @IBOutlet weak var topView: BorderedView!
@@ -40,7 +43,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         pickerView.dataSource = self;
         pickerView.delegate = self;
-        
+        for i in (0...ctxtDown) {
+            green.append(CGFloat(Double(i)/Double(ctxtDown)*255)/255)
+            red.append(CGFloat(0))
+        }
+        green = green.reverse()
+        for i in (ctxtDown...ctxtDown+ctxtUp){
+            green.append(CGFloat(0))
+            red.append(CGFloat(Double(i-ctxtDown)/Double(ctxtUp)*255)/255)
+        }
+
         //Do borders and change button form to circle
         doUIStuff()
         
@@ -73,8 +85,29 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return pickerData.count;
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        //This is a hack. pickerView:didSelectRow:inComponent should do this, but it doesn't fire
+        //unless finger lifted from screen. It's not a bug, it's a feature
+        //pickerView:titleForRow:forComponent returns several rows at a time, so I restrict
+        //processing only for consecutive rows
+        if (row == self.oldrow + 2 || row == self.oldrow + 1 || row == self.oldrow - 1 || row == self.oldrow - 2) {
+            saveButton.setTitleColor(UIColor(red: red[row], green: green[row], blue: 0.0, alpha:1.0), forState: .Normal )
+            self.oldrow = row
+            }
+        let pickerLabel = UILabel()
+        pickerLabel.textColor = UIColor.blackColor()
+        pickerLabel.text = pickerData[row]
+        pickerLabel.font = UIFont(name: "Helvetica Neue", size: 36)
+        pickerLabel.textAlignment = NSTextAlignment.Center
+        return pickerLabel
+    }
+    
+    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 42.0
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        saveButton.setTitleColor(UIColor(red: red[row], green: green[row], blue: 0.0, alpha:1.0), forState: .Normal )
     }
     
     // MARK: Actions
@@ -85,12 +118,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     // MARK: Private functions
+
     private func doUIStuff() {
         buttonView.borderWidth=CGFloat(1.0)
         buttonView.borderDrawOptions = BorderedViewDrawOptions.DrawTop
         topView.borderWidth=CGFloat(1.0)
         topView.borderDrawOptions = BorderedViewDrawOptions.DrawBottom
         saveButton.layer.cornerRadius = saveButton.frame.width/2.0
+        saveButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Disabled)
     }
     
     private func doHealthKitManagement() {

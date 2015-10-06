@@ -78,7 +78,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     // MARK: Actions
     @IBAction func saveWeight(sender: UIButton) {
-        let newweight = pickerData[pickerView.selectedRowInComponent(0)]
+        let newweight = String(pickerData[pickerView.selectedRowInComponent(0)].characters.dropLast().dropLast().dropLast())
         writeMostRecentSample(newweight)
         readMostRecentSample(weightType!, completion: manageModelUpdate)
     }
@@ -138,7 +138,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             // Stupid swift not recognizing map as it should
             self.pickerData.removeAll()
             for i in (-self.ctxtDown...self.ctxtUp) {
-                self.pickerData.append("\(Double(weight)! + Double(i) * 0.1)")
+                self.pickerData.append("\(Double(weight)! + Double(i) * 0.1) kg")
             }
             self.pickerView.reloadAllComponents()
             self.pickerView.selectRow(self.ctxtDown, inComponent: 0, animated: true)
